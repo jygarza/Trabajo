@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AdrianBernal/procesos.git"
+    "url": "git+https://github.com/jygarza/Trabajo.git"
   },
-  "author": "Adrian",
+  "author": "Javier",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AdrianBernal/procesos/issues"
+    "url": "https://github.com/jygarza/Trabajo/issues"
   },
-  "homepage": "https://github.com/AdrianBernal/procesos#readme"
+  "homepage": "https://github.com/jygarza/Trabajo#readme"
 }
