@@ -13,7 +13,12 @@ function Juego(){
 	}
 	this.obtenerUsuario=function(id){
 		return _.find(this.usuarios,function(usu){
-			return usu.id==id;
+			return usu._id==id;
+		});
+	}
+	this.obtenerUsuarioLogin=function(email,password){
+		return _.find(this.usuarios,function(usu){
+			return (usu.email==email && usu.password==password);
 		});
 	}
 	this.agregarResultado=function(resultado){
@@ -26,13 +31,22 @@ function Nivel(num){
 }
 
 function Usuario(nombre){
-	this.id=new Date().valueOf();
 	this.nombre=nombre;
 	this.nivel=0;
+	this.esil=nombre;
+	this.password=undefined;
+}
+
+function Usuario(nombre,password){
+	this.nombre=nombre;
+	this.nivel=0;
+	this.email=nombre;
+	this.password=password;
 }
 
 function Resultado(nombre,nivel,tiempo){
 	this.nombre=nombre;
+	this.email=nombre;
 	this.nivel=nivel;
 	this.tiempo=tiempo;
 }
