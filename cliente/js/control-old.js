@@ -1,4 +1,4 @@
-7var url="http://127.0.0.1:1338/";
+..7var url="http://127.0.0.1:1338/";
 
 function iniciar(){
 	pedirNombre();

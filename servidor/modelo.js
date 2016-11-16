@@ -1,4 +1,5 @@
 var _ = require("underscore");
+var fs = require("fs");
 
 function Juego(){
 	this.nombre="Niveles";
@@ -26,8 +27,33 @@ function Juego(){
 	}
 }
 
-function Nivel(num){
+function JuegoFM(archivo){
+	this.juego=new Juego();
+	this.array=leerCoordenadas(archivo);
+
+	this.makeJuego=function(juego,array){
+		var indi=0;
+		array.forEach(function(ele){
+			console.log(ele.gravedad);
+			console.log(ele.coord);
+			var nivel=new Nivel(indi,ele.coord,ele.gravedad);
+			juego.agregarNivel(nivel);
+			indi++;
+		});
+		return juego;
+	}
+}
+
+function leerCoordenadas(archivo){
+	var array=JSON.parse(fs.readFileSync(archivo));
+	//console.log(array);
+	return array;
+}
+
+function Nivel(num,coord,gravedad){
 	this.nivel=num;
+	this.coordenadas=coord;
+	this.gravedad=gravedad;
 }
 
 function Usuario(nombre){
@@ -51,6 +77,7 @@ function Resultado(nombre,nivel,tiempo){
 	this.tiempo=tiempo;
 }
 
+module.exports.JuegoFM=JuegoFM;
 module.exports.Juego=Juego;
 module.exports.Usuario=Usuario;
 module.exports.Resultado=Resultado;

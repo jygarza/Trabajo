@@ -2,6 +2,9 @@
 var fs=require("fs");
 //var config=JSON.parse(fs.readFileSync("config.json"));
 //var host=config.host;
+//var url=window.location.href.split('#')[0]; //Funciona
+var url="http://127.0.0.1:5000/";
+//var url="http://procesosygarza.herokuapp.com/";
 
 var exp=require("express");
 var app=exp();
@@ -10,9 +13,30 @@ var ObjectId=require("mongodb").ObjectId;
 var bodyParser=require("body-parser");
 //var debug=true;
 var modelo=require("./servidor/modelo.js");
-var juego= new modelo.Juego();
-var usuariosCol;
+//var juego= new modelo.Juego();
+var fm=new modelo.JuegoFM("./servidor/coordenadas.json");
+var juego=fm.makeJuego(fm.juego,fm.array);
 
+//SendGrid
+var nodemailer = require('nodemailer');
+var sgTransport = require('nodemailer-sendgrid-transport');
+
+var options = {
+  auth: {
+    api_user: 'jygarza',
+    api_key: 'arbeloa17'
+  }
+}
+
+var client = nodemailer.createTransport(sgTransport(options));
+//Final SendGrid
+
+console.log(juego.niveles);
+
+
+var usuariosCol;
+var resultadosCol;
+var limboCol;
 
 
 app.set('port', (process.env.PORT || 5000));
@@ -54,14 +78,16 @@ app.post("/signup",function(request,response){
  	//console.log(request.body.password);
 	var email = request.body.email;
 	var pass = request.body.password;
-	usuariosCol.find({email:email}).toArray(function(error,usr){
+	//usuariosCol.find({email:email}).toArray(function(error,usr){
+	limboCol.find({email:email}).toArray(function(error,usr){
 		//console.log(usr);
 		if (usr.length>0){
 			//if (usr==undefined){
 			response.send({email:undefined});
 		} else {
 			var usuario=new modelo.Usuario(email,pass);
-			insertarUsuario(usuario,response);		
+			//insertarUsuario(usuario,response);		
+			insertarUsuarioLimbo(usuario,response);
 		}
 	});
 });
@@ -73,10 +99,11 @@ app.get('/nivelCompletado/:id/:tiempo',function(request,response){
 	var tiempo=request.params.tiempo;
 	var usuario=juego.obtenerUsuario(id);
 	var json={'nivel':-1}
+
 	if (usuario!=undefined){
-		juego.agregarResultado(new modelo.Resultado(usuario.email,usuario.nivel,tiempo));
+		insertarResultado(new modelo.Resultado(usuario.email,usuario.nivel,tiempo),response);
 		usuario.nivel+=1;
-		usuariosCol.update({_id:ObjectId(id)}, {$set: {nivel:usuario.nivel}});		
+		usuariosCol.update({_id:ObjectId(id)}, {$set: {nivel:usuario.nivel}});	
 		json={'nivel':usuario.nivel};
 	}
 	response.send(json);
@@ -133,7 +160,7 @@ app.delete("/eliminarUsuario/:id",function(request,response){
 });
 
 
-app.post('/actualizarUsuario',function(request,response){
+app.put('/actualizarUsuario',function(request,response){
 	//var uid=request.params.uid;
  	//var email=request.body.email;
 	var id=request.body.id;
@@ -143,18 +170,47 @@ app.post('/actualizarUsuario',function(request,response){
 	//var nombre=request.body.nombre;
     //var password=request.body.newpass;
     //var nivel=parseInt(request.body.nivel);
-	var json={'resultados':-1};
+	var json={'email':''};
 	usuariosCol.update({_id:ObjectId(id),password:passwordOld}, {$set: {nombre:email,email:email,password:passwordNew}},function(err,result){
 		if (result.result.n==0){
     	console.log("No se pudo actualizar");
   		} else {
-	   		json={"resultados":1};
+	   		json=juego.obtenerUsuario(id);
 	   		console.log("Usuario actualizado");
  		}
 	  	cargarUsuarios();
 	  	response.send(json);
 	});
 });
+
+
+app.get('/pedirNivel/:uid',function(request,response){
+	var uid=request.params.uid;
+	var usuario=juego.obtenerUsuario(uid);
+	var json={'nivel':-1};
+	if(usuario && usuario.nivel<juego.niveles.length){
+		response.send(juego.niveles[usuario.nivel]);
+	}else{
+		response.send(json);
+	}
+})
+
+app.get('/confirmarUsuario/:email/:key',function(request,response){
+	var key = request.params.key;
+	var email=request.params.email;
+	var usuario;
+	limboCol.find({email:email}).toArray(function(error,usr){
+		//console.log(usr);
+		if (usr.length==0){
+			console.log("El usuario no existe");
+			response.send("<h1>La cuenta ya esta activada</h1>");
+		} else {
+			insertarUsuario(usr[0],response);
+		}
+	});
+})
+
+
 
 function comprobarCambios(body,usu){
  if (body.email!=usu.email && body.email!=""){
@@ -181,7 +237,53 @@ function insertarUsuario(usu,response){
 		} else {
 			console.log("Nuevo usuario creado");
 			juego.agregarUsuario(usu);
-			response.send(usu);
+			response.send("<h1>Que la fuerza te acompañe</h1>");
+		}
+	});
+}
+
+function insertarUsuarioLimbo(usu,response){
+	console.log(usu);
+	limboCol.insert(usu,function(err){
+		if(err){
+			console.log("error");
+		} else {
+			console.log("Nuevo usuario creado");
+			response.send({email:'ok'});
+			enviarEmail(usu.email,usu.key);
+		}
+	});
+}
+
+function enviarEmail(direccion,key){
+	var email = {
+		  from: 'jygarza@gmail.com',
+		  to:direccion,
+		  subject: 'Confirmación de cuenta',
+		  text: 'Confirmar Cuenta',
+		  html: '<a href="'+url+'confirmarUsuario/'+direccion+'/'+key+'">Que la fuerza te acompañe</a>'
+	};
+
+	client.sendMail(email, function(err, info){
+    if (err){
+      console.log('No se ha podido enviar el email '+ err);
+    }
+    else {
+      console.log('Email enviado: ' + info);
+    }
+	});
+}
+
+
+
+function insertarResultado(resultado,response){
+	console.log(resultado);
+	resultadosCol.insert(resultado,function(err){
+		if(err){
+			console.log("error");
+		} else {
+			console.log("Nuevo usuario creado");
+			juego.agregarResultado(resultado);
 		}
 	});
 }
@@ -200,34 +302,30 @@ mongo.connect("mongodb://pepe:pepe@ds035046.mlab.com:35046/usuarioscn",function(
  	} else {
 		console.log("Conectado a Mongo: usuarioscn");
 		db.collection("usuarios",function(error,col){
-			console.log("tenemos la colección");
+			console.log("tenemos la colección Usuarios");
 			usuariosCol=col;
 			cargarUsuarios();
 		});
 	}
-});
 
-
-/*var db = new mongo.Db("usuarioscn",new mongo.Server("127.0.0.1",27017,{}));
-
-db.open(function(error){
-	console.log("contectado a Mongo: usuarioscn");
-	db.collection("usuario",function(error,col){
-		console.log("tenemos la colección");
-		usuariosCol=col;
-		col.insert({
-			id:"1",
-			name:"Pepe Lopez",
-			twitter:"@pepe",
-			email:"pepe@lopez.es"
-		},function(err){
+	db.collection("resultados",function(err,col){
 		if(err){
-			console.log("error");
-		} else {
-			console.log("Nuevo usuario creado");
+			console.log("No se pudo conectar");
 		}
-	});
-		//console.log(usuariosCol);
-	});	
-});*/
+		else{
+			console.log("tenemos la colección resultados");
+			resultadosCol=col;
+		}
+	})
+
+	db.collection("limbo",function(err,col){
+		if(err){
+			console.log("No se pudo conectar");
+		}
+		else{
+			console.log("tenemos la colección limbo");
+			limboCol=col;
+		}
+	})
+});
 

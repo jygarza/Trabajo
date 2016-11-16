@@ -54,7 +54,8 @@ function siguienteNivel(){
 			$('#enh').remove();
 			$('#res').remove();
 	  		$('#resultados').remove();
-			crearNivel($.cookie('nivel'));
+			//crearNivel($.cookie('nivel'));
+			pedirNivel(nivel);
 		} else if (nivel==maxNiveles) {
 			$('#juegoId').before("<h2 id='enh'>Lo siento, no hay más niveles</h2>");
 			$('#control').append('<button type="button" id="siguienteBtn" class="btn btn-success btn-md">Volver a empezar</button>')
@@ -71,10 +72,13 @@ function siguienteNivel(){
 				$('#enh').remove();
 				$('#res').remove();
 	  			$('#resultados').remove();
-				crearNivel($.cookie('nivel'));
+				//crearNivel($.cookie('nivel'));
+				pedirNivel(nivel);
 			});
 		}
 }
+
+
 
 function mostrarResultados(datos){
   //eliminarGame();
@@ -103,7 +107,8 @@ function reiniciarNivel(){
 			$('#reiniciarBtn').on('click',function(){
 				$('#reiniciarBtn').remove();
 				borrarJuego();
-				crearNivel($.cookie('nivel'));
+				pedirNivel(nivel);
+				//crearNivel($.cookie('nivel'));
 			});
 };
 
@@ -323,7 +328,8 @@ function registroUsuario(email, password){
 				$.cookie('email',data.email);
 				$.cookie('id',data._id);
 				$.cookie('nivel', data.nivel);
-				mostrarInfoJugador();
+				//mostrarInfoJugador();
+				mostrarLogin();
 			}
 		},
 		contentType:'application/json',
@@ -353,7 +359,7 @@ function eliminarUsuario(id){
 function actualizarUsuario(email, passwordOld, passwordNew){
 	$.ajax({
 		type:'POST',
-		url:'/actualizarUsuario',
+		url:'/actualizarUsuario/',
 		data:JSON.stringify({id:$.cookie('id'),email:email, passwordOld:passwordOld, passwordNew:passwordNew}),
 		success:function(data){
 			if (data.resultados<1){
@@ -369,4 +375,13 @@ function actualizarUsuario(email, passwordOld, passwordNew){
 		contentType:'application/json',
 		dataType:'json'
 	});
+}
+
+function pedirNivel(){
+	var uid=$.cookie("id");
+	if(uid!=undefined){
+		$.getJSON(url+"pedirNivel/"+uid,function(data){
+			crearNivel(data);
+		});
+	}
 }

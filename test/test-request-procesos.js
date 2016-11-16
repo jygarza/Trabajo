@@ -121,6 +121,30 @@ function eliminarUsuario(uid){
 	});
 }
 
+function nivelCompletado(uid,tiempo){
+	var options={
+		url:url+'nivelCompletado/'+uid+'/'+tiempo,
+		method:'GET',
+		headers:headers,
+		//form:{email:email,password:password}
+	}
+
+	request(options,function(error,response,body){
+		if (!error && response.statusCode==200){
+			console.log('Usuario creado:     '+body);
+			usuario = JSON.parse( body) ;
+			comprobarUsuario(usuario._id);
+			actualizarUsuario(usuario._id,usuario.email,usuario.password);
+    		eliminarUsuario(usuario._id);
+		}
+		else{
+			console.log(response.statusCode);
+			throw error;
+
+		}
+	});
+}
+
 
 //testRaiz();
 crearUsuario('test','test');

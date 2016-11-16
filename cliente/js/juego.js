@@ -11,32 +11,46 @@ var scoreText;
 var timer;
 var tiempo=0;
 var tiempoText;
+var explosions;
+var liveText;
 
 var maxNiveles=3;
 var ni;
+var level;
 
 inicializarCoordenadas();
 
-function crearNivel(nivel){
-    ni=parseInt(nivel);
+function crearNivel(data){
+   /* ni=parseInt(nivel);
     if(ni<maxNiveles)
     {
         game = new Phaser.Game(800, 600, Phaser.AUTO, 'juegoId', { preload: preload, create: create, update: update });
     }
     else{
         noHayNiveles();
+    }*/
+    if(data.nivel<0){
+        noHayNiveles();
+    }else{
+        game = new Phaser.Game(800, 600, Phaser.AUTO, 'juegoId', { preload: preload, create: create, update: update });
+        nivel=data.id;
+        coord=data.coordenadas;
+        gravedad=data.gravedad;
     }
 }
     
 
 function preload() {
     game.load.image('sky', 'assets/sky.png');
+    game.load.image('sky2', 'assets/sky2.png');
     game.load.image('ground', 'assets/ground.png');
     game.load.image('ground2', 'assets/ground2.png');
     game.load.image('star', 'assets/star.png');
-    game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    game.load.spritesheet('dude', 'assets/dude5.png', 32, 48);
+    game.load.spritesheet('dude2', 'assets/dude8.png', 32, 48);
     game.load.image('heaven', 'assets/heaven.png');
     game.load.image('meteorito', 'assets/meteorito.png');
+    game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
 }
 
 function noHayNiveles() {
@@ -45,11 +59,20 @@ function noHayNiveles() {
 
 function create() {
 
+        level=0;
+
         //  We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         //  A simple background for our game
-        game.add.sprite(0, 0, 'sky');
+        
+
+            game.add.sprite(0, 0, 'sky');
+        
+        
+
+        //  A simple background for our game
+        
 
         //  The platforms group contains the ground and the 2 ledges we can jump on
         platforms = game.add.group();
@@ -72,8 +95,8 @@ function create() {
         //end.body.immovable = true;
 
         //  Now let's create two ledges
-        for(var i=0;i<4;i++){
-            ledge = platforms.create(coordenadas[ni][i].x,coordenadas[ni][i].y, 'ground2');
+        for(var i=0;i<coord.length;i++){
+            ledge = platforms.create(coord[i][0],coord[i][1], 'ground2');
             ledge.body.immovable = true;            
         }
         /*var ledge = platforms.create(400, 400, 'ground');
@@ -136,8 +159,31 @@ function create() {
         tiempo=0;
         timer=game.time.events.loop(Phaser.Timer.SECOND,updateTiempo,this);
 
+        
+
+
+        explosions = game.add.group();
+        explosions.createMultiple(30, 'kaboom');
+        explosions.forEach(setupMeteorito, this);
+        function setupMeteorito(met){
+            //met.anchor.x = 0.5;
+            //met.anchor.y = 0.5;
+            met.scale.setTo(0.3,0.3);
+            met.animations.add('kaboom');
+        }
+
+
+
+
+
+
+
+
+
         //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
+
+
         
 }
 
@@ -181,7 +227,7 @@ function update() {
         //  Allow the player to jump if they are touching the ground.
         if (cursors.up.isDown && player.body.touching.down)
         {
-            player.body.velocity.y = -350;
+            player.body.velocity.y = -270;
         }
 
 }
@@ -203,6 +249,8 @@ function collectStar (player, star) {
 
 function collectMeteorito (player, meteorito) {
         
+        
+
         // Removes the star from the screen
         meteorito.kill();
 
@@ -210,12 +258,21 @@ function collectMeteorito (player, meteorito) {
         /*score += 10;
         scoreText.text = 'Score: ' + score;*/
         player.vidas=player.vidas-1;
+
+         
+
         scoreText.text = 'Vidas: ' + player.vidas;
         if (player.vidas==0){
             player.kill();
             game.time.events.remove(timer);
+            reiniciarNivel();
         }
-
+        player.loadTexture('dude2');
+        this.game.time.events.add(75,function(){player.loadTexture('dude');});
+        this.game.time.events.add(150,function(){player.loadTexture('dude2');});
+        this.game.time.events.add(225,function(){player.loadTexture('dude');});
+        this.game.time.events.add(300,function(){player.loadTexture('dude2');});
+        this.game.time.events.add(375,function(){player.loadTexture('dude');});
 }
 
 function endNivel (player, heaven) {
@@ -225,6 +282,9 @@ function endNivel (player, heaven) {
 }
 
 function muereMeteorito(platform,meteorito){
+    var explosion = explosions.getFirstExists(false);
+    explosion.reset(meteorito.body.x, meteorito.body.y);
+    explosion.play('kaboom', 80, false, true);
     meteorito.kill();
     lanzarMeteorito(50);
 }
