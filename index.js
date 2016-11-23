@@ -3,8 +3,8 @@ var fs=require("fs");
 //var config=JSON.parse(fs.readFileSync("config.json"));
 //var host=config.host;
 //var url=window.location.href.split('#')[0]; //Funciona
-var url="http://127.0.0.1:5000/";
-//var url="http://procesosygarza.herokuapp.com/";
+//var url="http://127.0.0.1:5000/";
+var url="http://procesosygarza.herokuapp.com/";
 
 var exp=require("express");
 var app=exp();
