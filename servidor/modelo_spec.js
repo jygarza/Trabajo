@@ -4,7 +4,8 @@ describe("El juego niveles inicialmente...", function() {
 	var juego;
 
 	beforeEach(function(){
-		juego=new modelo.Juego();
+		var fm=new modelo.JuegoFM("./servidor/coordenadas.json");
+    juego=fm.makeJuego();
 	});
 
 	it("tiene una colección de niveles y usuarios", function() {
@@ -41,6 +42,17 @@ describe("El juego niveles inicialmente...", function() {
     expect(juego.resultados[0].nombre).toEqual("Pepe");
     expect(juego.resultados[0].nivel).toEqual(0);
     expect(juego.resultados[0].tiempo).toEqual(11);
+  });
+
+  it("comprobar eliminar usuario",function(){
+    var usuario=new modelo.Usuario("Paco");
+    juego.agregarUsuario(usuario);
+    var id=usuario.id;
+    var usu=juego.obtenerUsuario(id);
+    expect(usu.id).toEqual(id);
+    juego.eliminarUsuario(id);
+    usu=juego.obtenerUsuario(id);
+    expect(usuario).toBeUndefined();
   });
 
   xit("Pendiente de hacer");

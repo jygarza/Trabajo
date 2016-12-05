@@ -1,0 +1,54 @@
+<div id="cabecera">
+	<h2>Registrar usuario</h2>
+	<div class="alert alert-info">
+	  <strong>Info!</strong>Intoduce un email valido.
+	</div>
+	<div class="form-group">
+		<label for="name" class="control-label">Nombre de usuario</label>
+		<div class="input-group">
+			<span class="input-group-addon"></span>
+			<input type="text" class="form-control" name="name" id="nombreInput"  placeholder="Introduce un nombre de usuario"/>
+		</div>
+			<div class="alert alert-danger hidden" id="errorNombreVacioText">
+			  <strong>Error!</strong> Introduce un nombre de usuario.
+			</div>
+			<div class="alert alert-danger hidden" id="errorNombreEnUsoText">
+			  <strong>Error!</strong> El nombre no esta disponible.
+			</div>
+	<div class="form-group">
+		<label for="name" class="control-label">Email</label>
+		<div class="input-group">
+			<span class="input-group-addon"></span>
+			<input type="text" class="form-control" name="name" id="emailInput"  placeholder="Introduce un email"/>
+		</div>
+			<div class="alert alert-danger hidden" id="errorEmailVacioText">
+			  <strong>Error!</strong> Introduce un email.
+			</div>
+			<div class="alert alert-danger hidden" id="errorEmailNoValidoText">
+			  <strong>Error!</strong> El email no es válido.
+			</div>
+	</div>
+
+	<div class="form-group">
+		<label for="password" class="control-label">Contraseña</label>
+		<div class="input-group">
+			<span class="input-group-addon"></span>
+			<input type="password" class="form-control" name="password" id="passwordInput"  placeholder="Introduce tu contraseña"/>
+		</div>
+			<div class="alert alert-danger hidden" id="errorPasswordVacioText">
+			  <strong>Error!</strong> Introduce una contraseña.
+			</div>
+	</div>
+
+	<div class="form-group">
+		<label for="confirm" class=" control-label">Confirma tu contraseña</label>
+		<div class="input-group">
+			<span class="input-group-addon"></span>
+			<input type="password" class="form-control" name="password" id="passwordRepetidoInput"  placeholder="Introduce tu contraseña de nuevo"/>
+		</div>
+			<div class="alert alert-danger hidden" id="errorPasswordRepetidoText">
+			  <strong>Error!</strong> Las contraseñas son diferentes.
+			</div>
+	</div>	
+	<p><button type="button" id="registroBtn" class="btn btn-primary btn-mdn"><b>Registrar usuario</b></button></p>
+</div>

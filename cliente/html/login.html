@@ -1,0 +1,32 @@
+
+<div id="cabecera">
+	<h2>Inicio de sesión</h2>
+	<div class="form-group">
+		<label for="name" class="control-label">Nombre de usuario</label>
+		<div class="input-group">
+			<span class="input-group-addon"></span>
+			<input type="text" class="form-control" name="name" id="nombreInput"  placeholder="Introduce tu nombre de usuario"/>
+		</div>
+			<div class="alert alert-danger hidden" id="errorNombreVacioText">
+			  <strong>Error!</strong> Debes introducir un nombre de usuario.
+			</div>
+	</div>
+
+	<div class="form-group">
+		<label for="password" class="control-label">Contraseña</label>
+		<div class="input-group">
+			<span class="input-group-addon"></span>
+			<input type="password" class="form-control" name="password" id="passwordInput"  placeholder="Introduce tu contraseña"/>
+		</div>
+			<div class="alert alert-danger hidden" id="errorPasswordVacioText">
+			  <strong>Error!</strong> Introduce una contraseña.
+			</div>
+	</div>
+		<div class="alert alert-danger hidden" id="errorLoginText">
+			<strong>Error!</strong> El usuario no existe o la contraseña es errónea. Registrate si aun no lo has hecho
+		</div>
+	<p>
+		<button type="button" id="loginBtn" class="btn btn-primary btn-mdn"><b>Iniciar sesión</b></button>&nbsp;&nbsp;
+		<a href="#" id="refRegistrar">Registrar Usuario</a>
+	</p>
+</div>

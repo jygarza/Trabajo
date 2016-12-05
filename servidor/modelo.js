@@ -12,18 +12,19 @@ function Juego(){
 	this.agregarUsuario=function(usuario){
 		this.usuarios.push(usuario);
 	}
+	this.agregarResultado=function(resultado){
+		this.resultados.push(resultado);
+	}
 	this.obtenerUsuario=function(id){
 		return _.find(this.usuarios,function(usu){
 			return usu._id==id;
 		});
 	}
-	this.obtenerUsuarioLogin=function(email,password){
-		return _.find(this.usuarios,function(usu){
-			return (usu.email==email && usu.password==password);
-		});
+	this.eliminarUsuario=function(id){
+		this.usuarios=_.without(this.usuarios, _.findWhere(this.usuarios,{_id:id}));
 	}
-	this.agregarResultado=function(resultado){
-		this.resultados.push(resultado);
+	this.eliminarResultado=function(nombre){
+		this.resultados=_.without(this.resultados, _.findWhere(this.resultados,{nombre:nombre}));
 	}
 }
 
@@ -31,16 +32,12 @@ function JuegoFM(archivo){
 	this.juego=new Juego();
 	this.array=leerCoordenadas(archivo);
 
-	this.makeJuego=function(juego,array){
-		var indi=0;
-		array.forEach(function(ele){
-			console.log(ele.gravedad);
-			console.log(ele.coord);
-			var nivel=new Nivel(indi,ele.coord,ele.gravedad);
-			juego.agregarNivel(nivel);
-			indi++;
-		});
-		return juego;
+	this.makeJuego=function(){
+		this.array.forEach(function(nivel,i){
+			var nivel=new Nivel(i,nivel.coordenadas,nivel.coordenadasGris,nivel.gravedad);
+			this.juego.agregarNivel(nivel);
+		},this);
+		return this.juego;
 	}
 }
 
@@ -57,24 +54,29 @@ function Nivel(num,coord,gravedad){
 }
 
 function Usuario(nombre){
+	this.key=(new Date().valueOf()).toString();
 	this.nombre=nombre;
 	this.nivel=0;
-	this.esil=nombre;
-	this.password=undefined;
-}
-
-function Usuario(nombre,password){
-	this.nombre=nombre;
-	this.nivel=0;
-	this.email=nombre;
+	this.intentos=0;
+	this.email=email;
 	this.password=password;
 }
 
-function Resultado(nombre,nivel,tiempo){
+function Usuario(nombre, email, password){
+	this.key=(new Date().valueOf()).toString();
 	this.nombre=nombre;
-	this.email=nombre;
+	this.nivel=0;
+	this.intentos=0;
+	this.email=email;
+	this.password=password;
+}
+
+function Resultado(nombre,nivel,tiempo,vidas,intentos){
+	this.nombre=nombre;
 	this.nivel=nivel;
 	this.tiempo=tiempo;
+	this.vidas=vidas;
+	this.intentos=intentos;
 }
 
 module.exports.JuegoFM=JuegoFM;

@@ -1,47 +1,111 @@
-<!doctype html> 
-<html lang="en"> 
-<head> 
-	<meta charset="UTF-8" />
-    <title>Phaser - Making your first game, part 9</title>
+<!DOCTYPE html>
+<!-- saved from url=(0023)http://localhost:5000/# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+.fondobackground {
+  position: absolute;
+  top:0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-image: url(assets/fondo.jpg);
+  background-size: 100%;
+  background-clip: border-box;
+  background-repeat: no-repeat;
+  }
 
-    <script type="text/javascript" src="lib/phaser.min.js" ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="lib/jquery.cookie.js" ></script>
+  </style>
 
-    <meta charset="utf-8">
+ 
+
+	
+    <title>ProcesosYgarza</title>
+
+    <script type="text/javascript" src="./index_files/phaser.min.js.descarga"></script>
+    <script src="./index_files/jquery.min.js.descarga"></script>
+    <script src="./index_files/bootstrap.min.js.descarga"></script>
+    <script type="text/javascript" src="./index_files/jquery.cookie.js.descarga"></script>
+
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon.ico">
+    <link rel="stylesheet" href="./index_files/bootstrap.min.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:5000/assets/favicon.ico">
+
+    <!-- DataTables -->
+    <script src="./index_files/jquery.dataTables.min.js.descarga"></script>
+    <link rel="stylesheet" href="./index_files/jquery.dataTables.min.css">
+    <!-- FIN DataTables -->
+
+    <!-- Login y Registro -->
+        <!-- Website Font style -->
+        <link rel="stylesheet" href="./index_files/font-awesome.min.css">
+    <!-- FIN Login y Registro -->
+    
 </head>
 <body>
-    <nav class="navbar navbar-default">
+<div class="fondobackground">  
+  
+<nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">
-                <span><img src="assets/favicon.png"></span>   Conquista Niveles</a>
+                <a class="navbar-brand" href="http://localhost:5000/">
+                <span><img src="./index_files/favicon.png"></span>   Conquista Niveles</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="">Inicio</a></li>
-                <li><a onclick="obtenerResultados()" href="#">Resultados</a></li>
-                <li><a onclick="modificarPerfil()" href="#">Actualizar usuario</a></li>
-                <li><a onclick="reset()" href="#">Salir</a></li>
+                <li class="active"><a href="http://localhost:5000/">Inicio</a></li>
+                <li><a onclick="obtenerResultados()" href="http://localhost:5000/#">Resultados</a></li>
+                <li><a onclick="modificarPerfil()" href="http://localhost:5000/#">Actualizar usuario</a></li>
+                <li><a onclick="reset()" href="http://localhost:5000/#">Salir</a></li>
             </ul>
         </div>
     </nav>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-4">
-                <div id="control"></div>
+                <div id="control">
+<div id="cabecera">
+	<h2>Inicio de sesión</h2>
+	<div class="form-group">
+		<label for="name" class="control-label">Nombre de usuario</label>
+		<div class="input-group">
+			
+			<input type="text" class="form-control" name="name" id="nombreInput" placeholder="Introduce tu nombre de usuario">
+		</div>
+			<div class="alert alert-danger hidden" id="errorNombreVacioText">
+			  <strong>Error!</strong> Debes introducir un nombre de usuario.
+			</div>
+	</div>
+
+	<div class="form-group">
+		<label for="password" class="control-label">Contraseña</label>
+		<div class="input-group">
+			
+			<input type="password" class="form-control" name="password" id="passwordInput" placeholder="Introduce tu contraseña">
+		</div>
+			<div class="alert alert-danger hidden" id="errorPasswordVacioText">
+			  <strong>Error!</strong> Introduce una contraseña.
+			</div>
+	</div>
+		<div class="alert alert-danger hidden" id="errorLoginText">
+			<strong>Error!</strong> El usuario no existe o la contraseña es errónea. Registrate si aun no lo has hecho
+		</div>
+	<p>
+		<button type="button" id="loginBtn" class="btn btn-primary btn-mdn"><b>Iniciar sesión</b></button>&nbsp;&nbsp;
+		<a href="http://localhost:5000/#" id="refRegistrar">Registrar Usuario</a>
+	</p>
+</div>
+</div>
             </div>
             <div class="col-sm-8">
                 <div id="juegoId"></div>
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="js/control-juego.js" ></script>
-    <script type="text/javascript" src="js/coordenadas.js"></script>
-    <script type="text/javascript" src="js/juego.js" ></script>
+    <script type="text/javascript" src="./index_files/control-juego.js.descarga"></script>
+    <script type="text/javascript" src="./index_files/coordenadas.js.descarga"></script>
+    <script type="text/javascript" src="./index_files/juego.js.descarga"></script>
     <script type="text/javascript">inicio();</script>  
-</body>
-</html>
+
+ </div>
+    
+
+</body></html>

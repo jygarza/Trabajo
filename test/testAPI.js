@@ -13,8 +13,13 @@ var headers={
 console.log("===========================================")
 console.log(" Inicio de las pruebas del API REST:");
 console.log(" 1. Crear usuario - 2. Iniciar sesión");
-console.log(" 3. Modificar usuario - 4. Eliminar usuario");
-console.log(" 5. El usuario no puede iniciar sesión");
+console.log(" 2. Obtener key");
+console.log(" 3. Activar cuenta");
+console.log(" 4. Iniciar sesion");
+console.log(" 5. Modificar usuario");
+console.log(" 6. Completar Niveles");
+console.log(" 7. ");
+
 console.log("========================================== \n")
 
 function crearUsuario(email,password){
@@ -201,6 +206,16 @@ function eliminarUsuario(uid){
 		iniciarSesion2('pepe@pepe.es','pepe');
 	});
 }
+
+
+
+
+//function obtenerKeyUsuario(email){
+//	var options={
+//		url:url+'obtenerKeyUsuario/'+email+'/a';
+//	}
+//}
+
 
 
 crearUsuario('pepe@pepe.es','pepe');
