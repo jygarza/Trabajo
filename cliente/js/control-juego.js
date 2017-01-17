@@ -1,6 +1,8 @@
 //Funciones que modifican el index
 //var url="http://127.0.0.1:5000/";
 //var url="http://procesosygarza.herokuapp.com/";
+
+
 var url=window.location.href.split('#')[0]; //Funciona
 var game;
 
@@ -76,8 +78,8 @@ function mostrarInfoJugador(){
 
 function mostrarResultados(datos,confirmar){
   if (borrarJuego(confirmar)) {
-	  	$('#juegoId').append('<h3 id="res">Resultados</h3>');
-	  	$('#juegoId').append('<table id="resultados" class="display" width="100%"></table>');
+	  	$('#juegoId').append('<h3 style="color:white"; id="res">Resultados</h3>');
+	  	$('#juegoId').append('<table style="background-color: rgb(0,255,0)" id="resultados" class="display" width="100%" border="5"></table>');
 	   	$('#resultados').DataTable({
 	        data: datos,
 	        columns: [
@@ -103,9 +105,9 @@ function comprobarNivel(){
 }
 
 function borrarJuego(confirmar){
-	if (game!=undefined){
+		if (game!=undefined){
 		if (confirmar){
-			if (!confirm("¿Seguro que quieres abandonar?")){
+			if (!confirm("¿Está seguro que desea terminar el intento?")){
 				return false;
 			}
 		}
@@ -129,7 +131,7 @@ function validarEmail(email) {
 
 function mostrarEmailEnviado(){
 	if (borrarJuego(true)){
-		$('#juegoId').append('<div id="cabecera"><h3>Email de confirmación enviado</h3></div>');
+		$('#juegoId').append('<div id="cabecera"><h3 style="color:yellow";>Email de confirmación enviado, Revise su cuenta de correo</h3></div>');
 	}
 }
 
@@ -289,10 +291,14 @@ function sumarIntento(){
 }
 
 function obtenerResultados(confirmar){
-	$.getJSON(url+'obtenerResultados/',function(datos){
-		mostrarResultados(datos,confirmar);
-		mostrarInfoJugador();
-	});
+	if ($.cookie('id')!=undefined) {
+		$.getJSON(url+'obtenerResultados/',function(datos){
+			mostrarResultados(datos,confirmar);
+			mostrarInfoJugador();
+		});
+	} else {
+		mostrarLogin();
+	}
 }
 
 function loginUsuario(nombre, password){
@@ -310,6 +316,7 @@ function loginUsuario(nombre, password){
 				$.cookie('id',data._id);
 				$.cookie('nivel',data.nivel);
 				$.cookie('intentos',data.intentos);
+				$.cookie('vidas',data.vidas);
 				mostrarInfoJugador();
 			}
 		}

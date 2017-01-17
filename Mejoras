@@ -1,0 +1,7 @@
+Mejoras
+
+- No poder acceder a resultados sin estas logeado
+- Modificar el envio de email para mostrar otro mensaje (Que la fuerza te acompañe)
+- Intentar cambiar el fondo segun niveles
+- Todo lo que medifique en control-juego se tiene que copiar a index_files>control-juego.js.descarga
+- Poner Por favor INTRODUCE un email valido y no mostrarlo al principio

@@ -2,8 +2,8 @@ var fs=require("fs");
 //var config=JSON.parse(fs.readFileSync("config.json"));
 //var host=config.host;
 //var url=window.location.href.split('#')[0]; //Funciona
-var url="http://127.0.0.1:5000/";
-//var url="http://procesosygarza.herokuapp.com/";
+//var url="http://127.0.0.1:5000/";
+var url="http://procesosygarza.herokuapp.com/";
 
 var exp=require("express");
 var app=exp();
@@ -214,7 +214,7 @@ app.delete("/eliminarUsuario/:id",function(request,response){
 });
 
 
-app.put('/actualizarUsuario/',function(request,response){
+app.post('/actualizarUsuario',function(request,response){
 	//var uid=request.params.uid;
  	//var email=request.body.email;
 	var id=request.body.id;
@@ -372,7 +372,7 @@ var mailOptions = {
     to: usuario.email, // list of receivers
     subject: 'Confirmación usuario ✔', // Subject line
     text: 'Que la fuerza te acompañe', // plaintext body
-    html: '<a href="'+url+'confirmarUsuario/'+usuario.nombre+'/'+usuario.key+'">Juego Procesos confirmación</a>' // html body
+    html: '<a href="'+url+'confirmarUsuario/'+usuario.nombre+'/'+usuario.key+'">Juego jygarza confirmación</a>' // html body
 };
 
 // send mail with defined transport object

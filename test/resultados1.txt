@@ -1,0 +1,88 @@
+===========================================
+ PRUEBAS procesosYgarza - Control Errores
+ 1. Crear usuario - 2. Confirmar usuario
+ 3. Comprobar usuario - 4. Inicicar sesion
+ 5. Actualizar usuario - 6. Pedir nivel actual
+ 7. Sumar intento - 8. Completar nivel
+ 9. Resetear nivel - 10. Obtener resultados
+ 11. Eliminar usuario - 12. Intentar iniciar sesión
+ 13. Obtener resutlados otra vez
+========================================== 
+
+--------------------------------------------------------
+1. Intentar crear el usuario Pepe4 con email pepe@pepe.com y con clave pepe4
+--------------------------------------------------------
+Usuario Pepe4 creado correctamente 
+
+Usuario id: 5852bb88ba439c000470b184
+
+--------------------------------------------------------
+2. Se confirma el usuario Pepe con email pepe@pepe.es
+--------------------------------------------------------
+Usuario Pepe4 confirmado 
+
+--------------------------------------------------------
+3. Se comprueba que el usuario Pepe con email pepe@pepe.es está confirmado
+--------------------------------------------------------
+Usuario Pepe4 confirmado correctamente. Con 0 intentos 
+
+--------------------------------------------------------
+4. El usuario: Pepe4 intenta iniciar sesión
+--------------------------------------------------------
+Usuario Pepe4 ha iniciado la sesión 
+
+--------------------------------------------------------
+5. El usuario: Pepe4 actualiza el nombre
+--------------------------------------------------------
+Usuario Pepe4Actualizado ha actualizado su nombre 
+
+--------------------------------------------------------
+6. Se pide el nivel para el usuario: Pepe4Actualizado
+--------------------------------------------------------
+Nivel para el usuario Pepe4Actualizado: 
+
+{ nivel: 0,
+  coordenadas: [ [ 200, 450 ], [ 100, 350 ], [ 0, 250 ], [ 200, 150 ] ] }
+--------------------------------------------------------
+7. Se suma un intento a Pepe4Actualizado
+--------------------------------------------------------
+Intento sumado correctamente a Pepe4Actualizado con 1 intentos 
+
+--------------------------------------------------------
+8. Se completa el nivel para Pepe4Actualizado con 10 segundos y 3 vidas
+--------------------------------------------------------
+Nivel completado correctamente para Pepe4Actualizado 
+
+Nivel actual: 1 / Intentos actuales: 0
+
+--------------------------------------------------------
+9. Se resetea el nivel para Pepe4Actualizado
+--------------------------------------------------------
+Nivel reseteado correctamente para Pepe4Actualizado 
+
+Nivel actual: 0 / Intentos actuales: undefined
+
+--------------------------------------------------------
+10. Obtenemos los resultados almacenados
+--------------------------------------------------------
+Resultados obtenidos correctamente 
+
+[{"_id":"5845dac2c4ab061f6c517e5e","nombre":"a","nivel":0,"tiempo":"12","vidas":"undefined","intentos":7},{"nombre":"Pepe4Actualizado","nivel":0,"tiempo":"10","vidas":"3","intentos":1,"_id":"5852bb8aba439c000470b185"}]
+
+--------------------------------------------------------
+11. Se intenta eliminar el usuario con id: 5852bb88ba439c000470b184
+--------------------------------------------------------
+Usuario 5852bb88ba439c000470b184 eliminado 
+
+--------------------------------------------------------
+12. El usuario: pepe@pepe.es intenta iniciar sesión
+--------------------------------------------------------
+El usuario pepe@pepe.es no pudo iniciar la sesión 
+
+--------------------------------------------------------
+13. Obtenemos los resultados almacenados
+--------------------------------------------------------
+Resultados obtenidos correctamente 
+
+[{"_id":"5845dac2c4ab061f6c517e5e","nombre":"a","nivel":0,"tiempo":"12","vidas":"undefined","intentos":7}]
+

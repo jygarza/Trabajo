@@ -1,49 +1,49 @@
 <div id="cabecera">
-	<h2>Actualizar usuario</h2>
+	<h2 style="color:white"; >Actualizar usuario</h2>
 	<div class="alert alert-info">
-	  <strong>Info!</strong>Tienes introduce tu contraseña
+	  <strong style="color:red"; >Info!</strong>Tienes introduce tu contraseña
 	</div>
 	<div class="form-group">
-		<label  for="name" class="control-label">Nombre de usuario</label>
+		<label style="color:white";  for="name" class="control-label">Nombre de usuario</label>
 		<div class="input-group">
 			<span class="input-group-addon"></span>
 			<input type="text" class="form-control" name="name" id="nombreInput"  placeholder="Introduce un nombre de usuario"/>
 		</div>
 			<div class="alert alert-danger hidden" id="errorNombreVacioText">
-			  <strong>Error!</strong> Introduce un nombre de usuario.
+			  <strong style="color:red";>Error!</strong> Introduce un nombre de usuario.
 			</div>
 			<div class="alert alert-danger hidden" id="errorNombreEnUsoText">
-			  <strong>Error!</strong> Nombre en uso.
+			  <strong style="color:red";>Error!</strong> Nombre en uso.
 			</div>
 	</div>
 	<div class="form-group">
-		<label for="password" class="control-label">Contraseña actual</label>
+		<label style="color:white"; for="password" class="control-label">Contraseña actual</label>
 		<div class="input-group">
 			<span class="input-group-addon"></span>
 			<input type="password" class="form-control" name="password" id="passwordInput"  placeholder="Introduce tu contraseña actual"/>
 		</div>
 			<div class="alert alert-danger hidden" id="errorPasswordVacioText">
-			  <strong>Error!</strong> Introduce una contraseña.
+			  <strong style="color:red";>Error!</strong> Introduce una contraseña.
 			</div>
 			<div class="alert alert-danger hidden" id="errorPasswordOldIncorrectaText">
-			  <strong>Error!</strong> Contraseña incorrecta.
+			  <strong style="color:red";>Error!</strong> Contraseña incorrecta.
 			</div>
 	</div>
 	<div class="form-group">
-		<label for="confirm" class=" control-label">Contraseña nueva</label>
+		<label style="color:white"; for="confirm" class=" control-label">Contraseña nueva</label>
 		<div class="input-group">
 			<span class="input-group-addon"></span>
 			<input type="password" class="form-control" name="password" id="passwordNewInput"  placeholder="Introduce una contraseña nueva"/>
 		</div>
 	</div>	
 	<div class="form-group">
-		<label for="confirm" class=" control-label">Confirmacion contraseña</label>
+		<label style="color:white"; for="confirm" class=" control-label">Confirmacion contraseña</label>
 		<div class="input-group">
 			<span class="input-group-addon"></span>
 			<input type="password" class="form-control" name="password" id="passwordNewRepetidoInput"  placeholder="Introduce la contraseña nueva"/>
 		</div>
 			<div class="alert alert-danger hidden" id="errorPasswordNewRepetidoText">
-			  <strong>Error!</strong> Las contraseñas son diferentes.
+			  <strong style="color:red";>Error!</strong> Las contraseñas son diferentes.
 			</div>
 	</div>	
 	<p><button type="button" id="actualizarBtn" class="btn btn-primary btn-mdn"><b>Actualizar usuario</b></button>&nbsp;&nbsp;

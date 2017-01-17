@@ -14,9 +14,9 @@ var tiempoText;
 var explosions;
 var liveText;
 
-var maxNiveles=3;
+var maxNiveles=4;
 var ni;
-var level;
+var level = 0;
 
 inicializarCoordenadas();
 
@@ -42,12 +42,16 @@ function crearNivel(data){
 
 function preload() {
     game.load.image('sky', 'assets/sky.png');
-    game.load.image('sky2', 'assets/sky2.png');
+    game.load.image('sky1', 'assets/sky1.jpg');
+    game.load.image('sky2', 'assets/sky2.jpg');
+    game.load.image('sky3', 'assets/sky3.jpg');
     game.load.image('ground', 'assets/ground.png');
     game.load.image('ground2', 'assets/ground2.png');
     game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/dude5.png', 32, 48);
     game.load.spritesheet('dude2', 'assets/dude8.png', 32, 48);
+    game.load.spritesheet('dude3', 'assets/dude6b.png', 32, 48);
+    game.load.spritesheet('dude4', 'assets/dude6a.png', 32, 48);
     game.load.image('heaven', 'assets/heaven.png');
     game.load.image('meteorito', 'assets/meteorito.png');
     game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
@@ -59,19 +63,43 @@ function noHayNiveles() {
 
 function create() {
 
-        level=0;
+        //level=0;
+
+        if(level>=4)
+        {
+            level=0;
+        }
+        
+        //console.log(player.nivel);
+
+        if (level == 0)
+        {
+            game.add.sprite(0, 0, 'sky');
+            level = level +1;
+           
+        }
+        else if (level == 1)
+        {
+            game.add.sprite(0, 0, 'sky1');
+            level = level +1;
+        }
+        else if (level == 2)
+        {
+            game.add.sprite(0, 0, 'sky2');
+            level = level +1;
+        }
+        else
+        {
+            game.add.sprite(0, 0, 'sky3');
+            level = level +1;
+        }
+
+
 
         //  We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        //  A simple background for our game
         
-
-            game.add.sprite(0, 0, 'sky');
-        
-        
-
-        //  A simple background for our game
         
 
         //  The platforms group contains the ground and the 2 ledges we can jump on
@@ -108,9 +136,14 @@ function create() {
         ledge = platforms.create(350, 200, 'ground2');
         ledge.body.immovable = true;*/
 
-        // The player and its settings
+
+     
+        
+            // The player and its settings
         player = game.add.sprite(32, game.world.height - 150, 'dude');
-        player.vidas=5;
+        player.vidas=4;
+
+        
 
         //  We need to enable physics on the player
         game.physics.arcade.enable(player);
@@ -145,7 +178,7 @@ function create() {
 
             //  Let gravity do its thing
             //star.body.gravity.y = 300;
-            meteorito.body.gravity.y = 50;
+            meteorito.body.gravity.y = 250;
 
             //  This just gives each star a slightly random bounce value
             //star.body.bounce.y = 0.7 + Math.random() * 0.2;
@@ -153,14 +186,18 @@ function create() {
 
         //  The score
         //scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-        scoreText = game.add.text(16, 22, 'Vidas: 5', { fontSize: '32px', fill: '#000' });
+        
+        
+            scoreText = game.add.text(16, 22, 'Vidas: 4', { fontSize: '32px', fill: '#FFFF00' });
+        
+        
 
-        tiempoText=game.add.text(game.world.width-170,22,'Tiempo:0',{ fontSize: '32px', fill: '#000' });
+        tiempoText=game.add.text(game.world.width-170,22,'Tiempo:0',{ fontSize: '32px', fill: '#FFFF00' });
         tiempo=0;
         timer=game.time.events.loop(Phaser.Timer.SECOND,updateTiempo,this);
 
         
-
+       
 
         explosions = game.add.group();
         explosions.createMultiple(30, 'kaboom');
@@ -171,14 +208,6 @@ function create() {
             met.scale.setTo(0.3,0.3);
             met.animations.add('kaboom');
         }
-
-
-
-
-
-
-
-
 
         //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
@@ -205,14 +234,14 @@ function update() {
         if (cursors.left.isDown)
         {
             //  Move to the left
-            player.body.velocity.x = -150;
+            player.body.velocity.x = -200;
 
             player.animations.play('left');
         }
         else if (cursors.right.isDown)
         {
             //  Move to the right
-            player.body.velocity.x = 150;
+            player.body.velocity.x = 200;
 
             player.animations.play('right');
         }
@@ -267,18 +296,23 @@ function collectMeteorito (player, meteorito) {
             game.time.events.remove(timer);
             reiniciarNivel();
         }
-        player.loadTexture('dude2');
+
+        
+             player.loadTexture('dude2');
         this.game.time.events.add(75,function(){player.loadTexture('dude');});
         this.game.time.events.add(150,function(){player.loadTexture('dude2');});
         this.game.time.events.add(225,function(){player.loadTexture('dude');});
         this.game.time.events.add(300,function(){player.loadTexture('dude2');});
         this.game.time.events.add(375,function(){player.loadTexture('dude');});
+        
+
+        
 }
 
 function endNivel (player, heaven) {
     player.kill();
     game.time.events.remove(timer);
-    nivelCompletado(tiempo);
+    nivelCompletado(tiempo, player.vidas);
 }
 
 function muereMeteorito(platform,meteorito){
@@ -297,7 +331,7 @@ function lanzarMeteorito(gravedad){
     var meteorito = meteoritos.create(i, 60, 'meteorito'); //i*70,0
 
     //  Let gravity do its thing
-    meteorito.body.gravity.y = gravedad;
+    meteorito.body.gravity.y = gravedad+200;
 
     //  This just gives each meteorito a slightly random bounce value
     //meteorito.body.bounce.y = 0.7 + Math.random() * 0.2;

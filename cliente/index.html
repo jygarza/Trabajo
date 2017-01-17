@@ -20,15 +20,15 @@
 	
     <title>ProcesosYgarza</title>
 
-    <script type="text/javascript" src="./index_files/phaser.min.js.descarga"></script>
+    <script type="text/javascript" src="lib/phaser.min.js"></script>
     <script src="./index_files/jquery.min.js.descarga"></script>
     <script src="./index_files/bootstrap.min.js.descarga"></script>
-    <script type="text/javascript" src="./index_files/jquery.cookie.js.descarga"></script>
+    <script type="text/javascript" src="lib/jquery.cookie.js"></script>
 
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./index_files/bootstrap.min.css">
-    <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:5000/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon.ico">
 
     <!-- DataTables -->
     <script src="./index_files/jquery.dataTables.min.js.descarga"></script>
@@ -44,17 +44,17 @@
 <body>
 <div class="fondobackground">  
   
-<nav class="navbar navbar-default">
+<nav style="background-image: url(assets/descarga.jpg)" class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="http://localhost:5000/">
-                <span><img src="./index_files/favicon.png"></span>   Conquista Niveles</a>
+                <a class="navbar-brand" href="/">
+                <span><img src="./assets/favicon.png"></span>   Conquista Niveles</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="http://localhost:5000/">Inicio</a></li>
-                <li><a onclick="obtenerResultados()" href="http://localhost:5000/#">Resultados</a></li>
-                <li><a onclick="modificarPerfil()" href="http://localhost:5000/#">Actualizar usuario</a></li>
-                <li><a onclick="reset()" href="http://localhost:5000/#">Salir</a></li>
+                <li class="active"><a href="">Inicio</a></li>
+                <li><a onclick="obtenerResultados()" href="#">Resultados</a></li>
+                <li><a onclick="modificarPerfil()" href="#">Actualizar usuario</a></li>
+                <li><a onclick="reset()" href="#">Salir</a></li>
             </ul>
         </div>
     </nav>
@@ -100,9 +100,9 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="./index_files/control-juego.js.descarga"></script>
-    <script type="text/javascript" src="./index_files/coordenadas.js.descarga"></script>
-    <script type="text/javascript" src="./index_files/juego.js.descarga"></script>
+    <script type="text/javascript" src="js/control-juego.js"></script>
+    <script type="text/javascript" src="./js/coordenadas.js"></script>
+    <script type="text/javascript" src="./js/juego.js"></script>
     <script type="text/javascript">inicio();</script>  
 
  </div>

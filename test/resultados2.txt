@@ -1,0 +1,62 @@
+===========================================
+ Inicio de las pruebas del API REST:
+ 1. Crear usuario con cuenta ficticia
+ 2. Confirmar usuario que no existe
+ 3. Iniciar sesión
+ 4. Modificar usuario campos vacíos
+ 5. Eliminar usuario que no existe
+ url= http://procesosygarza.herokuapp.com/
+========================================== 
+
+--------------------------------------------------------
+1. Intentar crear el usuario Pepe3 con email pepe@pepe.com y con clave pepe3
+--------------------------------------------------------
+Usuario Pepe3 creado correctamente 
+
+Usuario id: 5852bc46ba439c000470b186
+
+--------------------------------------------------------
+2. Se confirma el usuario con una key que no existe
+--------------------------------------------------------
+Usuario Pepe3 no es confirmado 
+
+--------------------------------------------------------
+3. El usuario: Pepe3 intenta iniciar sesión
+--------------------------------------------------------
+El usuario Pepe3 NO pudo iniciar la sesión 
+
+--------------------------------------------------------
+4. El usuario: Pepe3 actualiza el nombre
+--------------------------------------------------------
+El usuario Pepe3 no pudo ser actualizado 
+
+--------------------------------------------------------
+5. Se intenta eliminar el usuario con un id que no existe
+--------------------------------------------------------
+El usuario no existe 
+
+--------------------------------------------------------
+6. Se confirma el usuario Pepe3 para poder actulizarlo y eliminarlo
+--------------------------------------------------------
+Usuario Pepe3 confirmado 
+
+--------------------------------------------------------
+7. El usuario: Pepe3 actualiza el nombre en blanco
+--------------------------------------------------------
+El usuario Pepe3 no pudo ser actualizado 
+
+--------------------------------------------------------
+8. El usuario: Pepe3 actualiza la password actual en blanco
+--------------------------------------------------------
+El usuario Pepe3 no pudo ser actualizado 
+
+--------------------------------------------------------
+9. El usuario: Pepe3 actualiza la password nueva en blanco
+--------------------------------------------------------
+El usuario Pepe3 no pudo ser actualizado 
+
+--------------------------------------------------------
+10. Se elimina el usuario Pepe3
+--------------------------------------------------------
+Usuario 5852bc46ba439c000470b186 eliminado 
+

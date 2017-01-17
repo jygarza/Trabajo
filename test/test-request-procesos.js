@@ -1,7 +1,7 @@
 var request=require("request");
-//var url='https://procesos.herokuapp.com/';
+var url="http://procesosygarza.herokuapp.com/";
 //var url='http://161.67.8.34:5000/';
-var url='http://127.0.0.1:5000/'
+//var url='http://127.0.0.1:5000/'
 var headers={
 	//'User-Agent': 'request'
 	"User-Agent":"Super Agent/0.0.1",
@@ -10,7 +10,7 @@ var headers={
 
 
 console.log("===========================================")
-console.log(" Inicio de las pruebas del API REST:");
+console.log(" PRUEBAS procesosYgarza - Control Errores");
 console.log(" 1. Crear usuario - 2. Confirmar usuario");
 console.log(" 3. Comprobar usuario - 4. Inicicar sesion");
 console.log(" 5. Actualizar usuario - 6. Pedir nivel actual");
@@ -66,7 +66,7 @@ function confirmarUsuario(id,key,nombre,password){
 			comprobarUsuario(id,nombre,password);
 		}
 		else{
-			console.log("El usuario "+nombre+" nose ha podido confirmar \n");
+			console.log("El usuario "+nombre+" no ha podido ser confirmado \n");
 		}
 	});
 }
@@ -387,6 +387,6 @@ function obtenerResultados2(){
 	});
 }
 
-//crearUsuario('Pepe','pepe@pepe.com','pepe');
+crearUsuario('Pepe4','pepe@pepe.com','pepe4');
 
-(function(){console.log('')})
+//(function(){console.log('')})
