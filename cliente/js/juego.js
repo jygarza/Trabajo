@@ -18,6 +18,9 @@ var maxNiveles=4;
 var ni;
 var level = 0;
 
+var s;
+var music;
+
 inicializarCoordenadas();
 
 function crearNivel(data){
@@ -32,7 +35,7 @@ function crearNivel(data){
     if(data.nivel<0){
         noHayNiveles();
     }else{
-        game = new Phaser.Game(800, 600, Phaser.AUTO, 'juegoId', { preload: preload, create: create, update: update });
+        game = new Phaser.Game(800, 600, Phaser.AUTO, 'juegoId', { preload: preload, create: create, update: update, render: render});
         nivel=data.id;
         coord=data.coordenadas;
         gravedad=data.gravedad;
@@ -55,6 +58,13 @@ function preload() {
     game.load.image('heaven', 'assets/heaven.png');
     game.load.image('meteorito', 'assets/meteorito.png');
     game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
+
+    game.load.audio('boden', ['assets/audio.mp3', 'assets/audio.ogg']);
+    game.load.audio('boden1', ['assets/salto.mp3', 'assets/salto.ogg']);
+    game.load.audio('boden2', ['assets/explosion.mp3', 'assets/explosion.ogg']);
+    game.load.audio('boden3', ['assets/cantina.mp3', 'assets/cantina.ogg']);
+    game.load.audio('boden4', ['assets/pelea.mp3', 'assets/pelea.ogg']);
+    game.load.audio('boden5', ['assets/marcha.mp3', 'assets/marcha.ogg']);
 }
 
 function noHayNiveles() {
@@ -72,26 +82,22 @@ function create() {
         
         //console.log(player.nivel);
 
+        console.log(level);
         if (level == 0)
         {
             game.add.sprite(0, 0, 'sky');
-            level = level +1;
-           
         }
         else if (level == 1)
         {
             game.add.sprite(0, 0, 'sky1');
-            level = level +1;
         }
         else if (level == 2)
         {
             game.add.sprite(0, 0, 'sky2');
-            level = level +1;
         }
         else
         {
             game.add.sprite(0, 0, 'sky3');
-            level = level +1;
         }
 
 
@@ -99,9 +105,37 @@ function create() {
         //  We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        
-        
 
+
+        //Audio
+        music = game.add.audio('boden');
+        music1 = game.add.audio('boden1');
+        music2 = game.add.audio('boden2');
+        music3 = game.add.audio('boden3');
+        music4 = game.add.audio('boden4');
+        music5 = game.add.audio('boden5');
+        music.play();
+        game.input.onDown.add(changeVolume, this);
+
+
+        if (level == 1)
+        {
+            music.stop();
+            music3.play();
+
+        }
+        if (level == 2)
+        {
+            music.stop();
+            music5.play();
+
+        }
+        if (level == 3)
+        {
+            music.stop();
+            music4.play();
+
+        }
         //  The platforms group contains the ground and the 2 ledges we can jump on
         platforms = game.add.group();
         heaven = game.add.group();
@@ -266,6 +300,29 @@ function updateTiempo(){
     tiempoText.setText('Tiempo: '+tiempo);
 }
 
+function changeVolume(pointer) {
+
+    if (pointer.y < 100)
+    {
+        music.mute = false;
+    }
+    else if (pointer.y < 300)
+    {
+        music.volume += 0.1;
+    }
+    else
+    {
+        music.volume -= 0.1;
+    }
+
+}
+
+function render() {
+   // game.debug.soundInfo(music, 20, 32);
+}
+
+
+
 function collectStar (player, star) {
         
         // Removes the star from the screen
@@ -313,14 +370,18 @@ function endNivel (player, heaven) {
     player.kill();
     game.time.events.remove(timer);
     nivelCompletado(tiempo, player.vidas);
+    level = level+1;
 }
 
 function muereMeteorito(platform,meteorito){
     var explosion = explosions.getFirstExists(false);
     explosion.reset(meteorito.body.x, meteorito.body.y);
     explosion.play('kaboom', 80, false, true);
+    //music2.play();
+    //music1.stop();
     meteorito.kill();
     lanzarMeteorito(50);
+
 }
 
 
