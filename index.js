@@ -20,21 +20,6 @@ var juego=fm.makeJuego(fm.juego,fm.array);
 var cifrado = require("./servidor/cifrado.js");
 
 
-/*
-//SendGrid
-var nodemailer = require('nodemailer');
-var sgTransport = require('nodemailer-sendgrid-transport');
-
-var options = {
-  auth: {
-    api_user: 'jygarza',
-    api_key: 'arbeloa17'
-  }
-}
-
-var client = nodemailer.createTransport(sgTransport(options));
-//Final SendGrid
-*/
 console.log(juego.niveles);
 
 
@@ -59,42 +44,29 @@ app.get("/",function(request,response){
 	response.send(contenido);
 });
 
-//insertar({nombre:"Pepe",email:"pe",clave:"pe"});
 
 
 app.post('/login',function(request,response){
 	var nombre=request.body.nombre;
 	var password=request.body.password;
 	var passwordCifrada = cifrado.encrypt(password);
-	//var email=request.body.email;
-	//var pass=request.body.password;
-	//var usuario=juego.obtenerUsuarioLogin(email,pass);
-	//console.log(usr);
 	usuariosCol.find({nombre:nombre,password:passwordCifrada}).toArray(function(error,usr){
 		if  (usr.length==0) {
-			//if(error){
-	 		//response.redirect("/signup");
 			response.send({'nombre':undefined});
 		} else {
-			//response.send({'usuario':usr});
 			var usuario=usr[0];
 			juego.agregarUsuario(usuario);
 			response.send(limpiarUsuario(usuario));
-			//response.send(usuario);
-		}
+			}
 	});
 });
 
 
 app.post("/signup",function(request,response){
-	//console.log(request.body.email);
- 	//console.log(request.body.password);
  	var nombre = request.body.nombre;
 	var email = request.body.email;
-	//var pass = request.body.password;
 	var password = request.body.password;
 	var passwordCifrada = cifrado.encrypt(password);
-	//usuariosCol.find({email:email}).toArray(function(error,usr){
 	limboCol.find({nombre:nombre}).toArray(function(error,usr){
 		//console.log(usr);
 		if (usr.length>0){
@@ -215,8 +187,6 @@ app.delete("/eliminarUsuario/:id",function(request,response){
 
 
 app.post('/actualizarUsuario',function(request,response){
-	//var uid=request.params.uid;
- 	//var email=request.body.email;
 	var id=request.body.id;
 	var email=request.body.email;
 	var passwordOld=request.body.passwordOld;
@@ -224,8 +194,6 @@ app.post('/actualizarUsuario',function(request,response){
 	var passwordNew=request.body.passwordNew;
 	var passwordNewCifrada=cifrado.encrypt(passwordNew);
 	var nombre=request.body.nombre;
-    //var password=request.body.newpass;
-    //var nivel=parseInt(request.body.nivel);
     console.log("Actualizando");
 	var json={'nombre':undefined};
 	if (nombre!='' && passwordOld!='' && passwordNew!='') {
@@ -239,7 +207,6 @@ app.post('/actualizarUsuario',function(request,response){
 		});
   		} else {
   			response.send(json);
-	   		//json=juego.obtenerUsuario(id);
 	   		console.log("No se pudo actualizar");
  		}
 	});
@@ -271,26 +238,6 @@ app.get('/confirmarUsuario/:nombre/:key',function(request,response){
 		}
 	});
 });
-
-/*
-app.get("/obtenerKeyUsuario/:email/:adminKey",function(request,response){
-	var adminKey=request.params.adminKey;
-	var email=request.params.email;
-	var usuario;
-	if(adminKey=="a")
-	{
-		limboCol.find({email:email}).toArray(function(error,usr){
-			//console.log(usr);
-			if(usr.length==0){
-				response.send({key:""})
-			}else{
-				response.send({key:usr[0].key});
-			}
-		});
-	}
-});
-
-*/
 
 //Inserciones
 
@@ -328,36 +275,11 @@ function insertarUsuarioLimbo(usu,response){
 }
 
 function insertarResultado(resultado){
-	/*console.log(resultado);
-	resultadosCol.insert(resultado,function(err){
-		if(err){
-			console.log("error");
-		} else {
-			console.log("Nuevo usuario creado");
-			juego.agregarResultado(resultado);
-		}
-	});
-	*/
 	juego.agregarResultado(resultado);
 	resultadosCol.insert(resultado);
 }
 
 //Fin Inserciones
-
-/*
-function comprobarCambios(body,usu){
- if (body.email!=usu.email && body.email!=""){
-   usu.email=body.email;
- }
- if (body.newpass!=usu.password && body.newpass!=""){
-   usu.password=body.newpass;
- }
-   if (body.nombre!=usu.nombre && body.nombre!=""){
-   usu.nombre=body.nombre;
- }
- return usu;
-}
-*/
 
 function enviarEmail(usuario){
 	
@@ -384,42 +306,6 @@ transporter.sendMail(mailOptions, function(error, info){
 });
 
 }
-
-/*
-function insertarUsuarioLimbo(usu,response){
-	console.log(usu);
-	limboCol.insert(usu,function(err){
-		if(err){
-			console.log("error");
-		} else {
-			console.log("Nuevo usuario creado en");
-			response.send({email:'ok'});
-			moduloEmail.enviarEmail(usu.email,usu.key);
-		}
-	});
-}*/
-/*
-function enviarEmail(direccion,key){
-	var email = {
-		  from: 'jygarza@gmail.com',
-		  to:direccion,
-		  subject: 'Confirmación de cuenta',
-		  text: 'Confirmar Cuenta',
-		  html: '<a href="confirmarUsuario/'+direccion+'/'+key+'">Que la fuerza te acompañe</a>'
-	};
-
-	client.sendMail(email, function(err, info){
-    if (err){
-      console.log('No se ha podido enviar el email '+ err);
-    }
-    else {
-      console.log('Email enviado: ' + info);
-    }
-	});
-}
-
-*/
-
 
 
 function cargarUsuarios(){

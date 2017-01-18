@@ -51,10 +51,17 @@ function preload() {
     game.load.image('ground', 'assets/ground.png');
     game.load.image('ground2', 'assets/ground2.png');
     game.load.image('star', 'assets/star.png');
+    
+
     game.load.spritesheet('dude', 'assets/dude5.png', 32, 48);
     game.load.spritesheet('dude2', 'assets/dude8.png', 32, 48);
     game.load.spritesheet('dude3', 'assets/dude6b.png', 32, 48);
     game.load.spritesheet('dude4', 'assets/dude6a.png', 32, 48);
+    game.load.spritesheet('dude5', 'assets/dude9a.png', 32, 48);
+    game.load.spritesheet('dude6', 'assets/dude9b.png', 32, 48);
+    game.load.spritesheet('dude7', 'assets/dude10a.png', 32, 48);
+    game.load.spritesheet('dude8', 'assets/dude10b.png', 32, 48);
+
     game.load.image('heaven', 'assets/heaven.png');
     game.load.image('meteorito', 'assets/meteorito.png');
     game.load.spritesheet('kaboom', 'assets/explode.png', 128, 128);
@@ -173,10 +180,29 @@ function create() {
 
      
         
-            // The player and its settings
-        player = game.add.sprite(32, game.world.height - 150, 'dude');
-        player.vidas=4;
+        
+        // The player and its settings
+        
+        if (level == 1)
+        {
+            player = game.add.sprite(32, game.world.height - 150, 'dude7');
+            player.vidas=4;
 
+        }else if (level == 2)
+        {
+            player = game.add.sprite(32, game.world.height - 150, 'dude3');
+            player.vidas=4;
+
+        }else if (level == 3)
+        {
+            player = game.add.sprite(32, game.world.height - 150, 'dude5');
+            player.vidas=4;
+        }
+        else
+        {
+            player = game.add.sprite(32, game.world.height - 150, 'dude');
+            player.vidas=4;
+        }
         
 
         //  We need to enable physics on the player
@@ -355,14 +381,45 @@ function collectMeteorito (player, meteorito) {
         }
 
         
-             player.loadTexture('dude2');
+        if (level == 1)
+        {
+            player.loadTexture('dude8');
+        this.game.time.events.add(75,function(){player.loadTexture('dude7');});
+        this.game.time.events.add(150,function(){player.loadTexture('dude8');});
+        this.game.time.events.add(225,function(){player.loadTexture('dude7');});
+        this.game.time.events.add(300,function(){player.loadTexture('dude8');});
+        this.game.time.events.add(375,function(){player.loadTexture('dude7');});
+
+        }else if (level == 2)
+        {
+            player.loadTexture('dude4');
+        this.game.time.events.add(75,function(){player.loadTexture('dude3');});
+        this.game.time.events.add(150,function(){player.loadTexture('dude4');});
+        this.game.time.events.add(225,function(){player.loadTexture('dude3');});
+        this.game.time.events.add(300,function(){player.loadTexture('dude4');});
+        this.game.time.events.add(375,function(){player.loadTexture('dude3');});
+
+        }else if (level == 3)
+        {
+           player.loadTexture('dude6');
+        this.game.time.events.add(75,function(){player.loadTexture('dude5');});
+        this.game.time.events.add(150,function(){player.loadTexture('dude6');});
+        this.game.time.events.add(225,function(){player.loadTexture('dude5');});
+        this.game.time.events.add(300,function(){player.loadTexture('dude6');});
+        this.game.time.events.add(375,function(){player.loadTexture('dude5');});
+        }
+        else
+        {
+            player.loadTexture('dude2');
         this.game.time.events.add(75,function(){player.loadTexture('dude');});
         this.game.time.events.add(150,function(){player.loadTexture('dude2');});
         this.game.time.events.add(225,function(){player.loadTexture('dude');});
         this.game.time.events.add(300,function(){player.loadTexture('dude2');});
         this.game.time.events.add(375,function(){player.loadTexture('dude');});
-        
+        }
 
+
+    
         
 }
 
